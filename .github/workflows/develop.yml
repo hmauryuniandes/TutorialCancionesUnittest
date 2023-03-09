@@ -4,22 +4,22 @@ name: Automergedevelop
 on:
   push:
     branches: 'feature/**'
+    if: ${{ contains(github.event.head_commit.message, 'HU0') }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   job1:
     name: Develop
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.head_commit.message, 'HU0') }}
     steps:
+      - name: Checkout de repositorio
+        uses: actions/checkout@v2
       - name: Mezcla develop -> feature
         uses: tukasz/direct-merge-action@master
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           source-branch: develop
           target-branch: ${{ github.ref }}
-      - name: Checkout de repositorio
-        uses: actions/checkout@v2
       - name: Configuración de entorno de python
         uses: actions/setup-python@v2
         with:
