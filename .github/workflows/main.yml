@@ -1,0 +1,44 @@
+name: Automergedevelop
+
+# Controls when the action will run. 
+on:
+  push:
+    branches: 'develop'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  job1:
+    name: main
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.head_commit.message, 'release') }}
+    steps:
+    - name: Checkout de repositorio
+      uses: actions/checkout@v3.3.0
+    - name: Crear rama release
+      run: |
+        git checkout -b release
+        git push -f -u origin release
+    - name: Mezcla develop -> release
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: develop
+        target-branch: release
+    - name: Configuración de entorno de python
+      uses: actions/setup-python@v4.5.0
+      with:
+        python-version: '3.7'
+    - name: Instalación de librerías y dependencias
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt        
+    - name: Correr pruebas
+      id: correr-pruebas
+      run: python -m unittest discover -s tests
+      if: ${{ success() }}
+    - name: Mezcla  release -> main
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: release
+        target-branch: main
