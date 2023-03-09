@@ -4,11 +4,11 @@ name: Automergedevelop
 on:
   push:
     branches: 'feature/**'
-    if: ${{ contains(github.event.head_commit.message, 'HU0') }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   job1:
+    if: "!contains(github.event.head_commit.message, 'HU0')"
     name: Develop
     runs-on: ubuntu-latest
     steps:
