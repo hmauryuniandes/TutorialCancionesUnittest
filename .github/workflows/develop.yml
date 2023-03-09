@@ -11,16 +11,16 @@ jobs:
     name: Develop
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout de repositorio
-      uses: actions/checkout@v2
     - name: Mezcla develop -> feature
-      uses: tukasz/direct-merge-action@master
+      uses: tukasz/direct-merge-action@v2.0.2
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         source-branch: develop
         target-branch: ${{ github.ref }}
+    - name: Checkout de repositorio
+      uses: actions/checkout@v3.3.0
     - name: Configuración de entorno de python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4.5.0
       with:
         python-version: '3.7'
     - name: Instalación de librerías y dependencias
@@ -32,7 +32,7 @@ jobs:
       run: python -m unittest discover -s tests
     - name: Mezcla  feature -> develop
       if: ${{ success() }}
-      uses: tukasz/direct-merge-action@master
+      uses: tukasz/direct-merge-action@v2.0.2
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         source-branch: ${{ github.ref }}
