@@ -31,8 +31,8 @@ jobs:
     - name: Correr pruebas
       id: correr-pruebas
       run: python -m unittest discover -s tests
-    if: ${{ success() }}
-      - name: Mezcla  feature -> develop
+    - name: Mezcla  feature -> develop
+      if: ${{ success() }}
       uses: tukasz/direct-merge-action@master
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
