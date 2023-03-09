@@ -9,4 +9,4 @@ Para el desarrollo de este tutorial es importante cumplir con los siguientes req
  
 Con estos requisitos ya es posible comenzar con el tutorial.
 
-Version con pipeline 1.0
+Version con pipeline V1.0
