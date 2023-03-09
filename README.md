@@ -8,3 +8,5 @@ Para el desarrollo de este tutorial es importante cumplir con los siguientes req
 * Instalar SQLAlchemy 
  
 Con estos requisitos ya es posible comenzar con el tutorial.
+
+Version con pipeline V1.0

@@ -9,16 +9,18 @@ on:
 jobs:
   job1:
     name: Develop
+    if: ${{ contains(github.event.head_commit.message, 'HU') }}
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout de repositorio
+      uses: actions/checkout@v3.3.0
     - name: Mezcla develop -> feature
-      uses: tukasz/direct-merge-action@v2.0.2
+      uses: tukasz/direct-merge-action@master
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         source-branch: develop
         target-branch: ${{ github.ref }}
-    - name: Checkout de repositorio
-      uses: actions/checkout@v3.3.0
     - name: Configuración de entorno de python
       uses: actions/setup-python@v4.5.0
       with:
@@ -32,7 +34,7 @@ jobs:
       run: python -m unittest discover -s tests
     - name: Mezcla  feature -> develop
       if: ${{ success() }}
-      uses: tukasz/direct-merge-action@v2.0.2
+      uses: tukasz/direct-merge-action@master
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         source-branch: ${{ github.ref }}
