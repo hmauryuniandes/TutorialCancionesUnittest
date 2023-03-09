@@ -4,7 +4,7 @@ from src.logica.coleccion import Coleccion
 from src.modelo.album import Album, Medio
 from src.modelo.declarative_base import Session
 
-'''clase de pruebas para Album'''
+'''clase de pruebas'''
 class AlbumTestCase(unittest.TestCase):
 
     def setUp(self):
