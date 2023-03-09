@@ -16,14 +16,14 @@ jobs:
       uses: actions/checkout@v3.3.0
     - name: Crear rama release
       run: |
-        git checkout -b release
-        git push -f -u origin release
+        git checkout -b ${{ github.event.head_commit.message }}
+        git push -f -u origin ${{ github.event.head_commit.message }}
     - name: Mezcla develop -> release
       uses: tukasz/direct-merge-action@master
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         source-branch: develop
-        target-branch: release
+        target-branch: ${{ github.event.head_commit.message }}
     - name: Configuración de entorno de python
       uses: actions/setup-python@v4.5.0
       with:
@@ -40,5 +40,5 @@ jobs:
       uses: tukasz/direct-merge-action@master
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        source-branch: release
+        source-branch: ${{ github.event.head_commit.message }}
         target-branch: main
